@@ -37,12 +37,14 @@ $ rails s -e production
 * GitHub
 * RSpec
 * Pry
+* Shoulda Matchers
+* ActiveRecord support for string
 * SimpleCov
 * Hound CI
 * Postman
 * Webmock
 * VCR
-* JSON API
+* Fast JSON API
 
 ## Rubric/Project Description
 #### [**_View the Project Description and Rubric_**]http://backend.turing.io/module3/projects/rails_engine

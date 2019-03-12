@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :item do
-    name { "MyString" }
-    description { "MyString" }
-    unit_price { "MyString" }
-    merchant { nil }
-    created_at { "MyString" }
-    updated_at { "MyString" }
+    sequence :name { |n| "Stellar Item Name #{n}" }
+    sequence :description { |n| "Item Description #{n}" }
+    sequence :unit_price { |n| 100 + n }
+    merchant
+    created_at { (Time.now - 1.day).utc }
+    updated_at { (Time.now).utc }
   end
 end
