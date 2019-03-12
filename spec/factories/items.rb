@@ -4,7 +4,7 @@ FactoryBot.define do
     description { "MyString" }
     unit_price { "MyString" }
     merchant { nil }
-    created_at { "MyString" }
-    updated_at { "MyString" }
+    created_at { (Time.now - 1.day).utc }
+    updated_at { (Time.now).utc }
   end
 end
