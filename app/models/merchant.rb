@@ -6,5 +6,4 @@ class Merchant < ApplicationRecord
                         :created_at,
                         :updated_at
 
-
 end
