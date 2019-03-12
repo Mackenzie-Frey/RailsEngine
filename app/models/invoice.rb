@@ -1,5 +1,6 @@
 class Invoice < ApplicationRecord
-  enum status: [:shipped]
+  enum status: ["shipped"]
+  
   belongs_to :customer
   belongs_to :merchant
   has_many :transactions
