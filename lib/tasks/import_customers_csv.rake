@@ -5,4 +5,5 @@ desc "Imports a CSV file with customer data"
     CSV.foreach('./db/csv/customers.csv', :headers => true) do |row|
       Customer.create!(row.to_hash)
   end
+  p "Customers imported!"
 end
