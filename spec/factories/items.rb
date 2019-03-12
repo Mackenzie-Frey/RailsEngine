@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :item do
-    name { "MyString" }
-    description { "MyString" }
-    unit_price { "MyString" }
+    name { "Stella Item Name" }
+    description { "Item Description" }
+    unit_price { 100 }
     merchant { nil }
     created_at { (Time.now - 1.day).utc }
     updated_at { (Time.now).utc }
