@@ -1,24 +1,51 @@
 # README
+## Description
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to build a JSON API, which exposes the SalesEngine data schema.
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+To run Rails Engine on your local machine, navigate to the directory in which you would like the project to be located in, then execute the following commands:
 
-* System dependencies
+```
+$ git clone git@github.com:Mackenzie-Frey/RailsEngine.git
+$ cd RailsEngine
+$ bundle
+$ rails g rspec:install
+```
 
-* Configuration
+## Running Tests
 
-* Database creation
+To run the test suite, execute the following command: `rspec`.
 
-* Database initialization
+## Deployment
 
-* How to run the test suite
+To view Rails Engine in development, execute the following command from the project directory: `rails s`. In a browser, visit `localhost:3000`, to view the application.
 
-* Services (job queues, cache servers, search engines, etc.)
+To view the application in production, from the project directory, execute the following commands:
+```
+$ createuser -s -r RailsEngine
+$ RAILS_ENV=production rake db:{drop,create,migrate}
+$ rake assets:precompile
+$ rails s -e production
+```
 
-* Deployment instructions
+## Tools
+* Faraday
+* Waffle.io
+* GitHub
+* RSpec
+* Capybara
+* Pry
+* SimpleCov
+* Hound CI
+* Postman
+* Webmock
+* VCR
+* JSON API
 
-* ...
+## Rubric/Project Description
+#### [**_View the Project Description and Rubric_**]http://backend.turing.io/module3/projects/rails_engine
+
+## Author
+[Mackenzie Frey](https://github.com/Mackenzie-Frey)
