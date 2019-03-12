@@ -17,18 +17,18 @@ describe "Merchant API" do
   end
 
   it "sends a single merchant" do
-    create_list(:merchant, 3)
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+    m3 = create(:merchant)
 
-    get '/api/v1/merchants/1.json'
+    get "/api/v1/merchants/#{m2.id}.json"
 
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body)
 
-    expect(merchants["data"].count).to eq(1)
-    expect(merchants["data"].first).to have_key("id")
-    expect(merchants["data"].first["type"]).to eq("merchant")
-    expect(merchants["data"].first["attributes"]["name"]).to eq(Merchant.first.name)
+    expect(merchants["data"]["id"]).to eq(m2.id.to_s)
+    expect(merchants["data"]["attributes"]["name"]).to eq(m2.name)
   end
 
   # find an id with the date in spec harness, and expect it to come out to as the spec harness expects
