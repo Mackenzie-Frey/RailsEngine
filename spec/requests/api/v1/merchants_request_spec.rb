@@ -18,23 +18,16 @@ describe "Merchant API" do
 
   it "sends a single merchant" do
     m1 = create(:merchant)
-    m2 = create(:merchant)
-    m3 = create(:merchant)
+    create(:merchant)
+    create(:merchant)
 
-    get "/api/v1/merchants/#{m2.id}.json"
+    get "/api/v1/merchants/#{m1.id}.json"
 
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body)
 
-    expect(merchants["data"]["id"]).to eq(m2.id.to_s)
-    expect(merchants["data"]["attributes"]["name"]).to eq(m2.name)
+    expect(merchants["data"]["id"]).to eq(m1.id.to_s)
+    expect(merchants["data"]["attributes"]["name"]).to eq(m1.name)
   end
-
-  # find an id with the date in spec harness, and expect it to come out to as the spec harness expects
-  # when you use a finder, search for the date format from the spec harness
-
-  # finders use strong params
-  # case insensitive searches: column type in postgres called ci text (instead of text)
-  # add the above to it.
 end
