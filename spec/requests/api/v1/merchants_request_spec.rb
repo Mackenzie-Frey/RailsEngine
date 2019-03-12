@@ -8,7 +8,7 @@ describe "Merchant API" do
 
     expect(response).to be_successful
 
-    merchants = response.body["data"]
+    merchants = response.body
 
     expect(merchants.count).to eq(3)
     expect(merchants.first).to have_key("id")
