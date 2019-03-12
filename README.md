@@ -37,6 +37,7 @@ $ rails s -e production
 * GitHub
 * RSpec
 * Pry
+* Shoulda Matchers
 * SimpleCov
 * Hound CI
 * Postman
