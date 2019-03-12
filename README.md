@@ -2,6 +2,7 @@
 ## Description
 
 Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to build a JSON API, which exposes the SalesEngine data schema.
+rake task which imports all of the CSV’s and creates the corresponding records
 
 ## Getting Started
 
@@ -35,7 +36,6 @@ $ rails s -e production
 * Waffle.io
 * GitHub
 * RSpec
-* Capybara
 * Pry
 * SimpleCov
 * Hound CI
