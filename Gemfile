@@ -42,6 +42,7 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'pry'
+  gem 'shoulda-matchers'
 end
 
 
