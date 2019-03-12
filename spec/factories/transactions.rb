@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :transaction do
-    invoice { nil }
+    invoice
     sequence :credit_card_number { |n| "92838383883#{n}" }
     credit_card_expiration { "" }
     result { nil }
