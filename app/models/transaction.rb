@@ -8,6 +8,4 @@ class Transaction < ApplicationRecord
                         :updated_at
 
   scope :successful, -> { where(result: "success") }
-
-  
 end
