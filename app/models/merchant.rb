@@ -14,4 +14,8 @@ class Merchant < ApplicationRecord
     # .order(revenue: :desc)
     # .limit(limit)
   end
+
+  def revenue_by_date(date)
+    Merchant.first.invoices.select("sum(unit_price*quantity) AS revenue").joins(:invoice_items, :transactions).merge(Transaction.successful).where(updated_at: Date.parse(date).all_day)[0].revenue
+  end
 end
