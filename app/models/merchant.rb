@@ -6,15 +6,12 @@ class Merchant < ApplicationRecord
                         :created_at,
                         :updated_at
 
-  def self.most_revenue(n)
-    # binding.pry
-    # joins(:invoices)
-    # .joins("transactions ON invoices.id=transactions.invoice_id")
-
-    # joins(invoice_items: :transactions)
-    # sum(:quantity * :unit_price AS :revenue)
+  def self.most_revenue(limit)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
+    .select("merchants.*, sum(quantity*unit_price) AS revenue")
+    .group(:id)
     # .where(result: "success")
     # .order(revenue: :desc)
-    # .limit(n)
+    # .limit(limit)
   end
 end
