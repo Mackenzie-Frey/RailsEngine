@@ -39,4 +39,13 @@ RSpec.describe Merchant, type: :model do
       expect(Merchant.most_revenue(2)).to eq([merchant_2, merchant_1])
     end
   end
+  context 'Instance Methods' do
+    it ".revenue_by_date(date)" do
+      customer = create(:customer)
+      merchant = create(:merchant)
+      create(:invoice, customer: customer, merchant: merchant, updated_at: "2012-03-25 09:54:09 UTC")
+
+      expect(merchant.revenue_by_date("2012-03-25")).to eq(44444)
+    end
+  end
 end
