@@ -55,6 +55,8 @@ describe "Merchant API" do
 
     get '/api/v1/merchants/most_revenue?quantity=2'
 
-    expect(result).to eq([merchant_2, merchant_1])
+    result = JSON.parse(response.body)
+
+    expect(result["data"]).to eq([])
   end
 end
