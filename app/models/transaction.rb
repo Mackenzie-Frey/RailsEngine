@@ -6,4 +6,8 @@ class Transaction < ApplicationRecord
                         :result,
                         :created_at,
                         :updated_at
+
+  scope :successful, -> { where(result: "success") }
+
+  
 end
