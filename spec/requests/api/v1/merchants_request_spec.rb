@@ -49,8 +49,8 @@ describe "Merchant API" do
     create(:invoice_item, item: item_2, invoice: invoice_2, quantity: 20, unit_price: 500)
     create(:invoice_item, item: item_3, invoice: invoice_3, quantity: 30, unit_price: 500)
 
-    create(:transaction, invoice: invoice_1)
-    create(:transaction, invoice: invoice_2)
+    create(:transaction, invoice: invoice_1, result: "success")
+    create(:transaction, invoice: invoice_2, result: "success")
     create(:transaction, invoice: invoice_3, result: "failed")
 
     get '/api/v1/merchants/most_revenue?quantity=2'
