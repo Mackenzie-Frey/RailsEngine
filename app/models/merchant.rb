@@ -6,4 +6,6 @@ class Merchant < ApplicationRecord
                         :created_at,
                         :updated_at
 
+  def self.most_revenue(n)
+  end
 end
