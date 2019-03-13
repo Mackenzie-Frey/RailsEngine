@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :merchants do
         get 'most_revenue' => 'search#index'
+        get 'find' => 'search#show'
       end
       resources :merchants, only: [:index, :show]
     end
@@ -14,4 +15,3 @@ end
 
 # finders use strong params
 # case insensitive searches: column type in postgres called ci text (instead of text)
-# add the above to it.

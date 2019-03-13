@@ -59,4 +59,15 @@ describe "Merchant API" do
 
     expect(result["data"]).to eq([])
   end
+
+  it 'Single Finders - ID' do
+    create_list(:merchant, 2)
+    merchant_1 = create(:merchant)
+
+    get "/api/v1/merchants/find?id=#{merchant_1.id}"
+
+    result = JSON.parse(response.body)
+
+    expect(result["data"]["id"]).to eq(merchant_1.id)
+  end
 end
