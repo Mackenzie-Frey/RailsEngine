@@ -17,6 +17,6 @@ class Invoice < ApplicationRecord
     .merge(Transaction.successful)
     .group(:id)
     .order("revenue DESC")
-    .limit(5)
+    .limit(limit)
   end
 end
