@@ -1,8 +1,10 @@
 # README
 ## Description
 
-Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to build a JSON API, which exposes the SalesEngine data schema.
-rake task which imports all of the CSV’s and creates the corresponding records
+Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to deliver Fast JSON-formatted data. A rake task was utilized to import CSV files and to create the corresponding records in the Postgresql database.
+
+## Schema
+![Alt text](./public/schema_diagram.png?raw=true "Database Schema")
 
 ## Getting Started
 
@@ -14,10 +16,19 @@ $ cd RailsEngine
 $ bundle
 $ rails g rspec:install
 ```
+To seed the database with the CSV files, run the following:
+```bundle exec rake import_all```
 
 ## Running Tests
 
 To run the test suite, execute the following command: `rspec`.
+To run the application against the spec harness, navigate to the same level directory as your application:
+```
+git clone https://github.com/turingschool/rales_engine_spec_harness.git
+cd rales_engine_spec_harness
+bundle
+```
+To run the spec harness, navigate to the directory of your application, utilize 'rails s' to run the server. Open another tab in the terminal, navigate to the directory of your spec harness. While the server is running, type the command `rake`, to run the spec harness.
 
 ## Deployment
 
@@ -31,20 +42,19 @@ $ rake assets:precompile
 $ rails s -e production
 ```
 
-## Tools
-* Faraday
-* Waffle.io
-* GitHub
+## Built Utilizing
+* Rails
+* Fast JSON API
+* PostgreSQL
 * RSpec
 * Pry
+* FactoryBot
 * Shoulda Matchers
-* ActiveRecord support for string
 * SimpleCov
 * Hound CI
 * Postman
-* Webmock
-* VCR
-* Fast JSON API
+* Waffle.io
+* GitHub
 
 ## Rubric/Project Description
 #### [**_View the Project Description and Rubric_**]http://backend.turing.io/module3/projects/rails_engine
