@@ -5,10 +5,11 @@ Rails.application.routes.draw do
       namespace :merchants do
         get 'find' => 'search#show'
         get 'find_all' => 'search#index'
+        get 'random' => 'random#show'
         get 'most_revenue' => 'revenue#index'
       end
       resources :merchants, only: [:index, :show] do
-        get 'revenue', to: 'merchants/revenue_by_date#show'
+        get 'revenue' => 'merchants/revenue_by_date#show'
       end
     end
   end
