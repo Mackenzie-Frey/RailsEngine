@@ -7,12 +7,11 @@ class Merchant < ApplicationRecord
                         :updated_at
 
   def self.most_revenue(limit)
-    Merchant.joins(invoices: [:invoice_items, :transactions])
-    .select("merchants.*, sum(quantity*unit_price) AS revenue")
-    .group(:id)
-    # .where(result: "success")
-    # .order(revenue: :desc)
-    # .limit(limit)
+    select("merchants.*, sum(quantity*unit_price) AS revenue")
+    .joins(invoices: [:invoice_items, :transactions])
+    .group(:id).merge(Transaction.successful)
+    .order("revenue DESC")
+    .limit(limit)
   end
 
   def revenue_by_date(date)
