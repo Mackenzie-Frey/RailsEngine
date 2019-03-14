@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :merchants do
-        get 'most_revenue' => 'search#index'
         get 'find' => 'search#show'
+        get 'most_revenue' => 'revenue#index'
       end
       resources :merchants, only: [:index, :show] do
         get 'revenue', to: 'merchants/revenue/date#show'
@@ -16,4 +16,3 @@ end
 # when you use a finder, search for the date format from the spec harness
 
 # finders use strong params
-# case insensitive searches: column type in postgres called ci text (instead of text)
