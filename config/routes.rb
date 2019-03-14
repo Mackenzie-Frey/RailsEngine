@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
       resources :merchants, only: [:index, :show] do
         get 'revenue' => 'merchants/revenue_by_date#show'
+        get 'items' => 'merchants/items_by_merchant#index'
       end
     end
   end
