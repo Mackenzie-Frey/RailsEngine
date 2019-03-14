@@ -44,7 +44,7 @@ describe "Merchant API" do
       expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
     end
 
-    it 'by Name' do
+    it 'by name' do
       create(:merchant)
       merchant_1 = create(:merchant)
 
@@ -52,10 +52,10 @@ describe "Merchant API" do
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["name"]).to eq(merchant_1.name)
+      expect(result["data"]["attributes"]["name"]).to eq(merchant_1.name)
     end
 
-    xit 'by created_at' do
+    it 'by created_at' do
       create(:merchant)
       merchant_1 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
 
@@ -63,10 +63,10 @@ describe "Merchant API" do
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["created_at"]).to eq(merchant_1.created_at)
+      expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
     end
 
-    xit 'by updated_at' do
+    it 'by updated_at' do
       create(:merchant)
       merchant_1 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
 
@@ -74,7 +74,7 @@ describe "Merchant API" do
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["updated_at"]).to eq(merchant_1.updated_at)
+      expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
     end
   end
 
