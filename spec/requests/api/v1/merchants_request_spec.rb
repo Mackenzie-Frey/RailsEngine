@@ -34,7 +34,7 @@ describe "Merchant API" do
 
   context "Single Finder" do
     it 'by ID' do
-      create_list(:merchant, 2)
+      create(:merchant)
       merchant_1 = create(:merchant)
 
       get "/api/v1/merchants/find?id=#{merchant_1.id}"
@@ -42,6 +42,39 @@ describe "Merchant API" do
       result = JSON.parse(response.body)
 
       expect(result["data"]["id"]).to eq(merchant_1.id)
+    end
+
+    xit 'by Name' do
+      create(:merchant)
+      merchant_1 = create(:merchant)
+
+      get "/api/v1/merchants/find?id=#{merchant_1.name}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["name"]).to eq(merchant_1.name)
+    end
+
+    xit 'by created_at' do
+      create(:merchant)
+      merchant_1 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/merchants/find?id=#{merchant_1.created_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["created_at"]).to eq(merchant_1.created_at)
+    end
+
+    xit 'by updated_at' do
+      create(:merchant)
+      merchant_1 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/merchants/find?id=#{merchant_1.updated_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["updated_at"]).to eq(merchant_1.updated_at)
     end
   end
 
