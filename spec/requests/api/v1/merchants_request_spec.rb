@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe "Merchant API" do
-  context "Record Endpoint" do
-    it "sends a list of merchants" do
+describe 'Merchant API' do
+  context 'Record Endpoint' do
+    it 'sends a list of merchants' do
       create_list(:merchant, 3)
 
       get '/api/v1/merchants.json'
@@ -17,7 +17,7 @@ describe "Merchant API" do
       expect(merchants["data"].first["attributes"]["name"]).to eq(Merchant.first.name)
     end
 
-    it "sends a single merchant" do
+    it 'sends a single merchant' do
       m1 = create(:merchant)
       create_list(:merchant, 2)
 
@@ -32,7 +32,7 @@ describe "Merchant API" do
     end
   end
 
-  context "Single Finder" do
+  context 'Single Finder' do
     it 'by ID' do
       create(:merchant)
       merchant_1 = create(:merchant)
@@ -78,8 +78,8 @@ describe "Merchant API" do
     end
   end
 
-  context "Multi-Finders" do
-    it "by id" do
+  context 'Multi-Finders' do
+    it 'by id' do
       create(:merchant)
       merchant = create(:merchant)
 
@@ -90,7 +90,7 @@ describe "Merchant API" do
       expect(result["data"][0]["id"]).to eq(merchant.id.to_s)
     end
 
-    it "by name" do
+    it 'by name' do
       create(:merchant)
       name = "Generic Name"
       merchant_1 = create(:merchant, name: name)
@@ -105,7 +105,7 @@ describe "Merchant API" do
       expect(result["data"][1]["id"]).to eq(merchant_2.id.to_s)
     end
 
-    it "by created_at" do
+    it 'by created_at' do
       create(:merchant)
       merchant_1 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
       merchant_2 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
@@ -119,7 +119,7 @@ describe "Merchant API" do
       expect(result["data"][1]["id"]).to eq(merchant_2.id.to_s)
     end
 
-    it "by updated_at" do
+    it 'by updated_at' do
       create(:merchant)
       merchant_1 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
       merchant_2 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
@@ -134,7 +134,13 @@ describe "Merchant API" do
     end
   end
 
-  context "Business Intelligence" do
+  context 'Random' do
+    it 'resource' do
+      
+    end
+  end
+
+  context 'Business Intelligence' do
     it 'returns the top x merchants ranked by total revenue' do
       customer_1 = create(:customer)
 
