@@ -136,7 +136,13 @@ describe 'Merchant API' do
 
   context 'Random' do
     it 'resource' do
-      
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+
+      get '/api/v1/merchants/random.json'
+
+      result = JSON.parse(response.body)
+      expect(result["data"]["id"]).to eq(merchant_1.id.to_s).or eq(merchant_2.id.to_s)
     end
   end
 
