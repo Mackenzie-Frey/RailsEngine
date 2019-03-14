@@ -57,7 +57,9 @@ describe "Merchant API" do
 
     result = JSON.parse(response.body)
 
-    expect(result["data"]).to eq([])
+    expect(result["data"].count).to eq(2)
+    expect(result["data"][0]["id"]).to eq(merchant_2.id.to_s)
+    expect(result["data"][1]["id"]).to eq(merchant_1.id.to_s)
   end
 
   it 'Single Finders - ID' do
