@@ -92,42 +92,45 @@ describe "Merchant API" do
 
     it "by name" do
       create(:merchant)
-      merchant_1 = create(:merchant, name: "Same-Name")
-      merchant_2 = create(:merchant, name: "same-name")
+      name = "Generic Name"
+      merchant_1 = create(:merchant, name: name)
+      merchant_2 = create(:merchant, name: name)
 
-      get "/api/v1/merchants/find_all?name=same-name"
+      get "/api/v1/merchants/find_all?name=#{name}"
+
+      result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(merchant_1.id)
-      expect(result["data"][1]["id"]).to eq(merchant_2.id)
-      # use default scope to order by id
+      expect(result["data"][0]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(merchant_2.id.to_s)
     end
 
-    #This test needs customization
-    xit "by created_at" do
+    it "by created_at" do
       create(:merchant)
-      merchant_1 = create(:merchant, created_at: "Same-Name")
-      merchant_2 = create(:merchant, created_at: "same-name")
+      merchant_1 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
+      merchant_2 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
 
-      get "/api/v1/merchants/find_all?id=same-name"
+      get "/api/v1/merchants/find_all?created_at=2012-03-27 14:53:59 UTC"
+
+      result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(merchant_1.id)
-      expect(result["data"][1]["id"]).to eq(merchant_2.id)
-      # use default scope to order by id
+      expect(result["data"][0]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(merchant_2.id.to_s)
     end
-      #This test needs customization
-    xit "by updated_at" do
-      create(:merchant)
-      merchant_1 = create(:merchant, updated_at: "Same-Name")
-      merchant_2 = create(:merchant, updated_at: "same-name")
 
-      get "/api/v1/merchants/find_all?updated_at=same-name"
+    it "by updated_at" do
+      create(:merchant)
+      merchant_1 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
+      merchant_2 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/merchants/find_all?updated_at=2012-03-27 14:53:59 UTC"
+
+      result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(merchant_1.id)
-      expect(result["data"][1]["id"]).to eq(merchant_2.id)
-      # use default scope to order by id
+      expect(result["data"][0]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(merchant_2.id.to_s)
     end
   end
 
