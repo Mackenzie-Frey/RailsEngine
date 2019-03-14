@@ -12,7 +12,3 @@ Rails.application.routes.draw do
     end
   end
 end
-# find an id with the date in spec harness, and expect it to come out to as the spec harness expects
-# when you use a finder, search for the date format from the spec harness
-
-# finders use strong params
