@@ -146,6 +146,24 @@ describe 'Merchant API' do
     end
   end
 
+  context 'Relationships' do
+    it 'returns a collection of items associated with that merchant' do
+      create(:merchant)
+      merchant = create(:merchant)
+
+      item_1 = create(:item, merchant: merchant)
+      item_2 = create(:item, merchant: merchant)
+
+      get "/api/v1/merchants/#{merchant.id}/items"
+
+      result = JSON.parse(response.body)
+
+      expect(result['data'].count).to eq(2)
+      expect(result['data'][0]['attributes']['merchant_id']).to eq(merchant.id)
+      expect(result['data'][0]['type']).to eq('item')
+    end
+  end
+
   context 'Business Intelligence' do
     it 'returns the top x merchants ranked by total revenue' do
       customer_1 = create(:customer)
