@@ -10,13 +10,13 @@ class Invoice < ApplicationRecord
                         :created_at,
                         :updated_at
 
-# needs testing
-  def self.most_expensive(limit = 5)
-    Invoice.select("invoices.*, sum(quantity*unit_price) AS revenue")
-    .joins(:invoice_items, :transactions)
-    .merge(Transaction.successful)
-    .group(:id)
-    .order("revenue DESC")
-    .limit(limit)
-  end
+# Fully funcional method, not a part of project spec.
+  # def self.most_expensive(limit = 5)
+  #   Invoice.select("invoices.*, sum(quantity*unit_price) AS revenue")
+  #   .joins(:invoice_items, :transactions)
+  #   .merge(Transaction.successful)
+  #   .group(:id)
+  #   .order("revenue DESC")
+  #   .limit(limit)
+  # end
 end
