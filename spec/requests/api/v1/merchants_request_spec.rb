@@ -79,15 +79,18 @@ describe "Merchant API" do
   end
 
   context "Multi-Finders" do
-    xit "by id" do
+    it "by id" do
       create(:merchant)
       merchant = create(:merchant)
+
       get "/api/v1/merchants/find_all?id=#{merchant.id}"
 
-      expect(result["data"][0]["id"]).to eq(merchant_1.id)
+      result = JSON.parse(response.body)
+
+      expect(result["data"][0]["id"]).to eq(merchant.id.to_s)
     end
 
-    xit "by name" do
+    it "by name" do
       create(:merchant)
       merchant_1 = create(:merchant, name: "Same-Name")
       merchant_2 = create(:merchant, name: "same-name")
