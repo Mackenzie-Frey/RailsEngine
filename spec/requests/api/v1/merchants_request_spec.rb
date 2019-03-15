@@ -162,6 +162,24 @@ describe 'Merchant API' do
       expect(result['data'][0]['attributes']['merchant_id']).to eq(merchant.id)
       expect(result['data'][0]['type']).to eq('item')
     end
+
+    it 'returns a collection of invoices associated with that merchant from their known orders' do
+      customer = create(:customer)
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+
+      invoice_1 = create(:invoice, merchant: merchant_1, customer: customer)
+      invoice_2 = create(:invoice, merchant: merchant_1, customer: customer)
+      invoice_3 = create(:invoice, merchant: merchant_2, customer: customer)
+
+      get "/api/v1/merchants/#{merchant_1.id}/invoices"
+
+      result = JSON.parse(response.body)
+
+      expect(result['data'].count).to eq(2)
+      expect(result['data'][0]['attributes']['merchant_id']).to eq(merchant_1.id)
+      expect(result['data'][0]['type']).to eq('invoice')
+    end
   end
 
   context 'Business Intelligence' do
