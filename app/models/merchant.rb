@@ -20,4 +20,12 @@ class Merchant < ApplicationRecord
     .merge(Transaction.successful)
     .where(updated_at: Date.parse(date).all_day)[0]
   end
+
+  def self.most_items(limit)
+    joins(invoices: [:invoice_items, :transactions])
+    .select("merchants.*, SUM(quantity) AS total_quantity")
+    .group(:id).merge(Transaction.successful)
+    .order("total_quantity DESC")
+    .limit(limit)
+  end
 end
