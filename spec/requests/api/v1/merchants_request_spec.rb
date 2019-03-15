@@ -221,18 +221,14 @@ describe 'Merchant API' do
         merchant_2 = create(:merchant)
         merchant_3 = create(:merchant)
 
-        item_1 = create(:item, merchant: merchant_1)
-        item_2 = create(:item, merchant: merchant_2)
-        item_3 = create(:item, merchant: merchant_3)
-
         invoice_1 = create(:invoice, merchant: merchant_1)
         invoice_2 = create(:invoice, merchant: merchant_2)
         invoice_3 = create(:invoice, merchant: merchant_3)
 
-        create(:invoice_item, item: item_1, invoice: invoice_1, quantity: 10, unit_price: 500)
-        create(:invoice_item, item: item_2, invoice: invoice_2, quantity: 20, unit_price: 500)
-        create(:invoice_item, item: item_2, invoice: invoice_2, quantity: 20, unit_price: 500)
-        create(:invoice_item, item: item_3, invoice: invoice_3, quantity: 30, unit_price: 500)
+        create(:invoice_item, invoice: invoice_1, quantity: 10, unit_price: 500)
+        create(:invoice_item, invoice: invoice_2, quantity: 20, unit_price: 500)
+        create(:invoice_item, invoice: invoice_2, quantity: 20, unit_price: 500)
+        create(:invoice_item, invoice: invoice_3, quantity: 30, unit_price: 500)
 
         create(:transaction, invoice: invoice_1, result: "success")
         create(:transaction, invoice: invoice_2, result: "success")
@@ -245,6 +241,32 @@ describe 'Merchant API' do
         expect(result["data"].count).to eq(2)
         expect(result["data"][0]["id"]).to eq(merchant_2.id.to_s)
         expect(result["data"][1]["id"]).to eq(merchant_1.id.to_s)
+      end
+
+      it 'returns the total revenue for date x across all merchants' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+        merchant_3 = create(:merchant)
+
+        invoice_1 = create(:invoice, merchant: merchant_1, updated_at: "2012-03-29 14:53:59 UTC")
+        invoice_2 = create(:invoice, merchant: merchant_2, updated_at: "2012-03-27 14:53:59 UTC")
+        invoice_3 = create(:invoice, merchant: merchant_3, updated_at: "2012-03-27 14:53:59 UTC")
+
+        create(:invoice_item, invoice: invoice_1, quantity: 10, unit_price: 500)
+        create(:invoice_item, invoice: invoice_2, quantity: 2, unit_price: 50)
+        create(:invoice_item, invoice: invoice_2, quantity: 2, unit_price: 50)
+        create(:invoice_item, invoice: invoice_3, quantity: 2, unit_price: 50)
+
+        create(:transaction, invoice: invoice_1, result: "success")
+        create(:transaction, invoice: invoice_2, result: "success")
+        create(:transaction, invoice: invoice_3, result: "success")
+        create(:transaction, invoice: invoice_3, result: "failed")
+
+        get '/api/v1/merchants/revenue?date=2012-03-27'
+
+        result = JSON.parse(response.body)
+
+        expect(result["data"]["attributes"]["total_revenue"]).to eq(300)
       end
     end
 
