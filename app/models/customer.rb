@@ -4,4 +4,8 @@ class Customer < ApplicationRecord
                         :last_name,
                         :created_at,
                         :updated_at
+
+    def self.random
+      all.shuffle.pop
+    end
 end
