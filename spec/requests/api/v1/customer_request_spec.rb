@@ -171,12 +171,49 @@ describe 'Customer API' do
   end
 
   context 'Relationships' do
+    it 'returns a collection of associated invoices' do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      create(:invoice, customer: customer_1)
+      create(:invoice, customer: customer_1)
+      create(:invoice, customer: customer_2)
+
+      get "/api/v1/customers/#{customer_1.id}/invoices"
+
+      result = JSON.parse(response.body)
+
+      expect(result['data'].count).to eq(2)
+      expect(result['data'][0]['attributes']['customer_id']).to eq(customer_1.id)
+      expect(result['data'][1]['attributes']['customer_id']).to eq(customer_1.id)
+    end
+
+    it 'returns a collection of associated transactions' do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+
+      invoice_1 = create(:invoice, customer: customer_1)
+      invoice_2 = create(:invoice, customer: customer_1)
+      invoice_3 = create(:invoice, customer: customer_2)
+
+      transaction_1 = create(:transaction, invoice: invoice_1, result: 'success')
+      transaction_2 = create(:transaction, invoice: invoice_2, result: 'failed')
+      create(:transaction, invoice: invoice_3, result: 'success')
+
+      get "/api/v1/customers/#{customer_1.id}/transactions"
+
+      result = JSON.parse(response.body)
+
+      expect(result['data'].count).to eq(2)
+
+      expect(result['data'][0]['attributes']['id']).to eq(transaction_1.id)
+      expect(result['data'][1]['attributes']['id']).to eq(transaction_2.id)
+      expect(result['data'][1]['type']).to eq('transaction')
+    end
   end
 
   context 'Business Intelligence' do
-    context 'all merchants' do
-    end
-    context 'single merchant' do
+    xit 'returns a merchant where the customer has conducted the most successful transactions' do
+      get '/api/v1/customers/:id/favorite_merchant'
     end
   end
 end
