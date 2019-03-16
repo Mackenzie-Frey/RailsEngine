@@ -159,14 +159,14 @@ describe 'Customer API' do
   end
 
   context 'Random' do
-    xit 'resource' do
-      merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant)
+    it 'resource' do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
 
-      get '/api/v1/merchants/random.json'
+      get '/api/v1/customers/random.json'
 
       result = JSON.parse(response.body)
-      expect(result["data"]["id"]).to eq(merchant_1.id.to_s).or eq(merchant_2.id.to_s)
+      expect(result["data"]["id"]).to eq(customer_1.id.to_s).or eq(customer_2.id.to_s)
     end
   end
 
