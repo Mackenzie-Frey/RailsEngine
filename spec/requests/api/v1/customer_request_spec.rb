@@ -212,8 +212,29 @@ describe 'Customer API' do
   end
 
   context 'Business Intelligence' do
-    xit 'returns a merchant where the customer has conducted the most successful transactions' do
-      get '/api/v1/customers/:id/favorite_merchant'
+    it 'returns a merchant where the customer has conducted the most successful transactions' do
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+
+      invoice_1 = create(:invoice, customer: customer_1, merchant: merchant_1)
+      invoice_2 = create(:invoice, customer: customer_1, merchant: merchant_1)
+      invoice_3 = create(:invoice, customer: customer_2, merchant: merchant_2)
+      invoice_4 = create(:invoice, customer: customer_1, merchant: merchant_2)
+
+      create(:transaction, invoice: invoice_1, result: 'success')
+      create(:transaction, invoice: invoice_2, result: 'failed')
+      create(:transaction, invoice: invoice_2, result: 'success')
+      create(:transaction, invoice: invoice_3, result: 'success')
+      create(:transaction, invoice: invoice_4, result: 'success')
+
+      get "/api/v1/customers/#{customer_1.id}/favorite_merchant"
+      result = JSON.parse(response.body)
+
+      expect(result['data']['id']).to eq(merchant_1.id.to_s)
+      expect(result['data']['type']).to eq('merchant')
     end
   end
 end
