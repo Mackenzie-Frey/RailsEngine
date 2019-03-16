@@ -5,6 +5,9 @@ class Merchant < ApplicationRecord
   validates_presence_of :name,
                         :created_at,
                         :updated_at
+  def self.random
+    all.shuffle.pop
+  end
 
   def self.most_revenue(limit)
     select("merchants.*, sum(quantity*unit_price) AS revenue")
