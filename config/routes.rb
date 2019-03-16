@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         get 'revenue' => 'merchants/revenue_by_date#show'
         get 'items' => 'merchants/items_by_merchant#index'
         get 'invoices' => 'merchants/invoices_by_merchant#index'
+        get 'favorite_customer' => 'merchants/favorite_customer#show'
       end
     end
   end
