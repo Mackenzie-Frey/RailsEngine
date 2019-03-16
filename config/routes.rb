@@ -14,6 +14,18 @@ Rails.application.routes.draw do
         get 'revenue' => 'merchants/revenue_by_date#show'
         get 'items' => 'merchants/items_by_merchant#index'
         get 'invoices' => 'merchants/invoices_by_merchant#index'
+        get 'favorite_customer' => 'merchants/favorite_customer#show'
+      end
+
+      namespace :customers do
+        get 'find' => 'search#show'
+        get 'find_all' => 'search#index'
+        get 'random' => 'random#show'
+      end
+      resources :customers, only: [:index, :show] do
+        get 'invoices' => 'customers/invoices_of_customer#index'
+        get 'transactions' => 'customers/transactions_of_customer#index'
+        get 'favorite_merchant' => 'customers/favorite_merchant#show'
       end
     end
   end
