@@ -16,9 +16,10 @@ Rails.application.routes.draw do
         get 'invoices' => 'merchants/invoices_by_merchant#index'
         get 'favorite_customer' => 'merchants/favorite_customer#show'
       end
-      
+
       namespace :customers do
         get 'find' => 'search#show'
+        get 'find_all' => 'search#index'
       end
       resources :customers, only: [:index, :show] do
       end
