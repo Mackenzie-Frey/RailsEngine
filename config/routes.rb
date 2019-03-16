@@ -23,6 +23,8 @@ Rails.application.routes.draw do
         get 'random' => 'random#show'
       end
       resources :customers, only: [:index, :show] do
+        get 'invoices' => 'customers/invoices_of_customer#index'
+        get 'transactions' => 'customers/transactions_of_customer#index'
       end
     end
   end
