@@ -33,48 +33,57 @@ describe 'Customer API' do
   end
 
   context 'Single Finder' do
-    xit 'by ID' do
-      create(:merchant)
-      merchant_1 = create(:merchant)
+    it 'by ID' do
+      create(:customer)
+      customer_1 = create(:customer)
 
-      get "/api/v1/merchants/find?id=#{merchant_1.id}"
+      get "/api/v1/customers/find?id=#{customer_1.id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
     end
 
-    xit 'by name' do
-      create(:merchant)
-      merchant_1 = create(:merchant)
+    it 'by first name' do
+      customer_1 = create(:customer)
 
-      get "/api/v1/merchants/find?name=#{merchant_1.name}"
+      get "/api/v1/customers/find?name=#{customer_1.first_name}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["attributes"]["name"]).to eq(merchant_1.name)
+      expect(result["data"]["attributes"]["first_name"]).to eq(customer_1.first_name)
     end
 
-    xit 'by created_at' do
-      create(:merchant)
-      merchant_1 = create(:merchant, created_at: "2012-03-27 14:53:59 UTC")
+    it 'by last name' do
+      customer_1 = create(:customer)
 
-      get "/api/v1/merchants/find?created_at=#{merchant_1.created_at}"
+      get "/api/v1/customers/find?name=#{customer_1.last_name}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"]["attributes"]["last_name"]).to eq(customer_1.last_name)
     end
 
-    xit 'by updated_at' do
-      create(:merchant)
-      merchant_1 = create(:merchant, updated_at: "2012-03-27 14:53:59 UTC")
+    it 'by created_at' do
+      create(:customer)
+      customer_1 = create(:customer, created_at: "2012-03-27 14:53:59 UTC")
 
-      get "/api/v1/merchants/find?updated_at=#{merchant_1.updated_at}"
+      get "/api/v1/customers/find?created_at=#{customer_1.created_at}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(merchant_1.id.to_s)
+      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
+    end
+
+    it 'by updated_at' do
+      create(:customer)
+      customer_1 = create(:customer, updated_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/customers/find?updated_at=#{customer_1.updated_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
     end
   end
 
