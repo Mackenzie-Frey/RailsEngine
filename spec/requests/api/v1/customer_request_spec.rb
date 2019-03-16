@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Customer API' do
   context 'Record Endpoint' do
-    it 'sends a list of merchants' do
+    it 'sends a list of customers' do
       create_list(:customer, 3)
 
       get '/api/v1/customers.json'
