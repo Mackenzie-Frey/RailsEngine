@@ -7,4 +7,8 @@ class Item < ApplicationRecord
                         :unit_price,
                         :created_at,
                         :updated_at
+
+  def self.random
+    all.shuffle.pop
+  end
 end
