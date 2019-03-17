@@ -263,8 +263,28 @@ describe 'Item API' do
       expect(result["data"][1]["id"]).to eq(item_2.id.to_s)
     end
 
-    xit 'returns the top x item instances ranked by total number sold' do
-      get ''
+    it 'returns the top x item instances ranked by total number sold' do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
+
+      invoice_1 = create(:invoice)
+
+      create(:invoice_item, item: item_1, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_1, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_2, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_3, invoice: invoice_1, unit_price: 1, quantity: 2)
+
+      create(:transaction, result: "failed", invoice: invoice_1)
+      create(:transaction, result: "success", invoice: invoice_1)
+
+      get '/api/v1/items/most_items?quantity=2'
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(item_2.id.to_s)
     end
 
     xit 'returns the date with the most sales for the given item using the invoice date. If there are multiple days with equal number of sales, return the most recent day' do
