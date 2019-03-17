@@ -77,8 +77,9 @@ describe 'Invoice Item API' do
     end
 
     it 'by unit_price' do
+      unit_price = 100
       create(:invoice_item)
-      invoice_item_1 = create(:invoice_item, unit_price: 'success')
+      invoice_item_1 = create(:invoice_item, unit_price: unit_price)
 
       get "/api/v1/invoice_items/find?unit_price=#{invoice_item_1.unit_price}"
 
@@ -227,12 +228,28 @@ describe 'Invoice Item API' do
 
   context 'Relationships' do
     it 'returns the associated invoice' do
-      get '/api/v1/invoice_items/:id/invoice'
+      i1 = create(:invoice)
+      i2 = create(:invoice)
+      create(:invoice_item, invoice: i2)
+      ii = create(:invoice_item, invoice: i1)
 
+      get "/api/v1/invoice_items/#{ii.id}/invoice"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(i1.id.to_s)
     end
 
     it 'returns the associated item' do
-      get '/api/v1/invoice_items/:id/item'
+      i1 = create(:item)
+      i2 = create(:item)
+
+      create(:invoice_item, item: i2)
+      ii = create(:invoice_item, item: i1)
+
+      get "/api/v1/invoice_items/#{ii.id}/item"
+
+      expect(result["data"]["id"]).to eq(i1.id.to_s)
     end
   end
 end
