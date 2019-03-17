@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         get 'random' => 'random#show'
       end
       resources :items, only: [:index, :show] do
+        get 'invoice_items' => 'items/associated_invoice_items#index'
       end
 
       namespace :invoices do
@@ -42,7 +43,11 @@ Rails.application.routes.draw do
         get 'random' => 'random#show'
       end
       resources :invoices, only: [:index, :show] do
-
+        get 'transactions' => 'invoices/associated_transactions#index'
+        get 'invoice_items' => 'invoices/associated_invoice_items#index'
+        get 'items' => 'invoices/associated_items#index'
+        get 'customer' => 'invoices/associated_customer#show'
+        get 'merchant' => 'invoices/associated_merchant#show'
       end
 
       namespace :transactions do
