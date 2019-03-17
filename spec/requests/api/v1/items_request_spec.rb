@@ -31,208 +31,189 @@ describe 'Item API' do
   end
 
   context 'Single Finder' do
-    xit 'by ID' do
-      create(:customer)
-      customer_1 = create(:customer)
+    it 'by ID' do
+      create(:item)
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find?id=#{customer_1.id}"
+      get "/api/v1/items/find?id=#{item_1.id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
+      expect(result["data"]["id"]).to eq(item_1.id.to_s)
     end
 
-    xit 'by first name' do
-      customer_1 = create(:customer)
+    it 'by name' do
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find?name=#{customer_1.first_name}"
+      get "/api/v1/items/find?name=#{item_1.name}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["attributes"]["first_name"]).to eq(customer_1.first_name)
+      expect(result["data"]["attributes"]["name"]).to eq(item_1.name)
     end
 
-    xit 'by last name' do
-      customer_1 = create(:customer)
+    it 'by description' do
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find?name=#{customer_1.last_name}"
+      get "/api/v1/items/find?description=#{item_1.description}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["attributes"]["last_name"]).to eq(customer_1.last_name)
+      expect(result["data"]["attributes"]["description"]).to eq(item_1.description)
     end
 
-    xit 'by created_at' do
-      create(:customer)
-      customer_1 = create(:customer, created_at: "2012-03-27 14:53:59 UTC")
+    it 'by unit_price' do
+      create(:item)
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find?created_at=#{customer_1.created_at}"
+      get "/api/v1/items/find?unit_price=#{item_1.unit_price}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
+      expect(result["data"]["id"]).to eq(item_1.id.to_s)
     end
 
-    xit 'by updated_at' do
-      create(:customer)
-      customer_1 = create(:customer, updated_at: "2012-03-27 14:53:59 UTC")
+    it 'by merchant_id' do
+      create(:item)
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find?updated_at=#{customer_1.updated_at}"
+      get "/api/v1/items/find?merchant_id=#{item_1.merchant_id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(customer_1.id.to_s)
+      expect(result["data"]["id"]).to eq(item_1.id.to_s)
+    end
+
+    it 'by created_at' do
+      create(:item)
+      item_1 = create(:item, created_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/items/find?created_at=#{item_1.created_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(item_1.id.to_s)
+    end
+
+    it 'by updated_at' do
+      create(:item)
+      item_1 = create(:item, updated_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/items/find?updated_at=#{item_1.updated_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(item_1.id.to_s)
     end
   end
 
   context 'Multi-Finders' do
-    xit 'by id' do
-      create(:customer)
-      customer = create(:customer)
+    it 'by ID' do
+      create(:item)
+      item_1 = create(:item)
 
-      get "/api/v1/customers/find_all?id=#{customer.id}"
+      get "/api/v1/items/find_all?id=#{item_1.id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"][0]["id"]).to eq(customer.id.to_s)
+      expect(result["data"][0]["id"]).to eq(item_1.id.to_s)
     end
 
-    xit 'by first_name' do
-      create(:customer)
-      first_name = "Generic Name"
-      customer_1 = create(:customer, first_name: first_name)
-      customer_2 = create(:customer, first_name: first_name)
+    it 'by name' do
+      name = 'generic'
+      create(:item, name: name)
+      create(:item, name: name)
+      create(:item)
 
-      get "/api/v1/customers/find_all?first_name=#{first_name}"
+      get "/api/v1/items/find_all?name=#{name}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(customer_1.id.to_s)
-      expect(result["data"][1]["id"]).to eq(customer_2.id.to_s)
+      expect(result["data"][0]["attributes"]["name"]).to eq(name)
+      expect(result["data"][1]["attributes"]["name"]).to eq(name)
     end
 
-    xit 'by last_name' do
-      create(:customer)
-      last_name = "Generic Name"
-      customer_1 = create(:customer, last_name: last_name)
-      customer_2 = create(:customer, last_name: last_name)
+    it 'by description' do
+      description = 'generic'
+      create(:item, description: description)
+      create(:item, description: description)
+      create(:item)
 
-      get "/api/v1/customers/find_all?last_name=#{last_name}"
+      get "/api/v1/items/find_all?description=#{description}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(customer_1.id.to_s)
-      expect(result["data"][1]["id"]).to eq(customer_2.id.to_s)
+      expect(result["data"][0]["attributes"]["description"]).to eq(description)
+      expect(result["data"][1]["attributes"]["description"]).to eq(description)
+    end
+
+    xit 'by unit_price' do
+      unit_price = '10292'
+      create(:item, unit_price: unit_price)
+      create(:item, unit_price: unit_price)
+      create(:item)
+
+      get "/api/v1/items/find_all?unit_price=#{unit_price}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+
+      expect(result["data"][0]["attributes"]["unit_price"]).to eq(unit_price)
+      expect(result["data"][1]["attributes"]["unit_price"]).to eq(unit_price)
     end
 
     xit 'by created_at' do
-      create(:customer)
-      customer_1 = create(:customer, created_at: "2012-03-27 14:53:59 UTC")
-      customer_2 = create(:customer, created_at: "2012-03-27 14:53:59 UTC")
+      created_at = "2012-03-27 14:53:59 UTC"
+      create(:item, created_at: created_at)
+      create(:item, created_at: created_at)
+      create(:item)
 
-      get "/api/v1/customers/find_all?created_at=2012-03-27 14:53:59 UTC"
+      get "/api/v1/items/find_all?created_at=#{created_at}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(customer_1.id.to_s)
-      expect(result["data"][1]["id"]).to eq(customer_2.id.to_s)
+
+      expect(result["data"][0]["attributes"]["created_at"]).to eq(created_at)
+      expect(result["data"][1]["attributes"]["created_at"]).to eq(created_at)
     end
 
     xit 'by updated_at' do
-      create(:customer)
-      customer_1 = create(:customer, updated_at: "2012-03-27 14:53:59 UTC")
-      customer_2 = create(:customer, updated_at: "2012-03-27 14:53:59 UTC")
+      updated_at = "2012-03-27 14:53:59 UTC"
+      create(:item, updated_at: updated_at)
+      create(:item, updated_at: updated_at)
+      create(:item)
 
-      get "/api/v1/customers/find_all?updated_at=2012-03-27 14:53:59 UTC"
+      get "/api/v1/items/find_all?updated_at=#{updated_at}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-      expect(result["data"][0]["id"]).to eq(customer_1.id.to_s)
-      expect(result["data"][1]["id"]).to eq(customer_2.id.to_s)
+      expect(result["data"][0]["attributes"]["updated_at"]).to eq(updated_at)
+      expect(result["data"][1]["attributes"]["updated_at"]).to eq(updated_at)
     end
   end
 
   context 'Random' do
-    xit 'resource' do
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
+    it 'resource' do
+      item_1 = create(:item)
+      item_2 = create(:item)
 
-      get '/api/v1/customers/random.json'
+      get '/api/v1/items/random.json'
 
       result = JSON.parse(response.body)
-      expect(result["data"]["id"]).to eq(customer_1.id.to_s).or eq(customer_2.id.to_s)
+      expect(result["data"]["id"]).to eq(item_1.id.to_s).or eq(item_2.id.to_s)
     end
   end
 
   context 'Relationships' do
-    xit 'returns a collection of associated invoices' do
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
-      create(:invoice, customer: customer_1)
-      create(:invoice, customer: customer_1)
-      create(:invoice, customer: customer_2)
 
-      get "/api/v1/customers/#{customer_1.id}/invoices"
-
-      result = JSON.parse(response.body)
-
-      expect(result['data'].count).to eq(2)
-      expect(result['data'][0]['attributes']['customer_id']).to eq(customer_1.id)
-      expect(result['data'][1]['attributes']['customer_id']).to eq(customer_1.id)
-    end
-
-    xit 'returns a collection of associated transactions' do
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
-
-      invoice_1 = create(:invoice, customer: customer_1)
-      invoice_2 = create(:invoice, customer: customer_1)
-      invoice_3 = create(:invoice, customer: customer_2)
-
-      transaction_1 = create(:transaction, invoice: invoice_1, result: 'success')
-      transaction_2 = create(:transaction, invoice: invoice_2, result: 'failed')
-      create(:transaction, invoice: invoice_3, result: 'success')
-
-      get "/api/v1/customers/#{customer_1.id}/transactions"
-
-      result = JSON.parse(response.body)
-
-      expect(result['data'].count).to eq(2)
-
-      expect(result['data'][0]['attributes']['id']).to eq(transaction_1.id)
-      expect(result['data'][1]['attributes']['id']).to eq(transaction_2.id)
-      expect(result['data'][1]['type']).to eq('transaction')
-    end
   end
 
   context 'Business Intelligence' do
-    xit 'returns a merchant where the customer has conducted the most successful transactions' do
-      merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant)
 
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
-
-      invoice_1 = create(:invoice, customer: customer_1, merchant: merchant_1)
-      invoice_2 = create(:invoice, customer: customer_1, merchant: merchant_1)
-      invoice_3 = create(:invoice, customer: customer_2, merchant: merchant_2)
-      invoice_4 = create(:invoice, customer: customer_1, merchant: merchant_2)
-
-      create(:transaction, invoice: invoice_1, result: 'success')
-      create(:transaction, invoice: invoice_2, result: 'failed')
-      create(:transaction, invoice: invoice_2, result: 'success')
-      create(:transaction, invoice: invoice_3, result: 'success')
-      create(:transaction, invoice: invoice_4, result: 'success')
-
-      get "/api/v1/customers/#{customer_1.id}/favorite_merchant"
-      result = JSON.parse(response.body)
-
-      expect(result['data']['id']).to eq(merchant_1.id.to_s)
-      expect(result['data']['type']).to eq('merchant')
-    end
   end
 end
