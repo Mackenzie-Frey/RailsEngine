@@ -13,4 +13,8 @@ class InvoiceItem < ApplicationRecord
     .merge(Transaction.successful)
     .where(invoices: {updated_at: Date.parse(date).all_day})[0]
   end
+
+  def self.random
+    all.shuffle.pop
+  end
 end
