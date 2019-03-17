@@ -195,28 +195,93 @@ describe 'Invoice API' do
       get '/api/v1/invoices/random.json'
 
       result = JSON.parse(response.body)
+
       expect(result["data"]["id"]).to eq(invoice_1.id.to_s).or eq(invoice_2.id.to_s)
     end
   end
 
   context 'Relationships' do
-    xit 'returns a collection of associated transactions' do
-      get "/api/v1/invoices/:id/transactions"
-    end
-    xit 'returns a collection of associated invoice items' do
-      get "/api/v1/invoices/:id/invoice_items"
+    it 'returns a collection of associated transactions' do
+      invoice_1 = create(:invoice)
+      invoice_2 =create(:invoice)
+
+      transaction_1 = create(:transaction, invoice: invoice_1)
+      transaction_2 = create(:transaction, invoice: invoice_1)
+      create(:transaction, invoice: invoice_2)
+
+      get "/api/v1/invoices/#{invoice_1.id}/transactions"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(transaction_1.id.to_s).or eq(transaction_2.id.to_s)
+      expect(result["data"][1]["id"]).to eq(transaction_1.id.to_s).or eq(transaction_2.id.to_s)
     end
 
-    xit 'returns a collection of associated items' do
-      get "/api/v1/invoices/:id/items"
+    it 'returns a collection of associated invoice items' do
+      invoice_1 = create(:invoice)
+      invoice_2 =create(:invoice)
+
+      ii1 = create(:invoice_item, invoice: invoice_1)
+      ii2 = create(:invoice_item, invoice: invoice_1)
+      create(:invoice_item, invoice: invoice_2)
+
+      get "/api/v1/invoices/#{invoice_1.id}/invoice_items"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(ii1.id.to_s).or eq(ii2.id.to_s)
+      expect(result["data"][1]["id"]).to eq(ii1.id.to_s).or eq(ii2.id.to_s)
     end
 
-    xit 'returns the associated customer' do
-      get "/api/v1/invoices/:id/customer"
+    it 'returns a collection of associated items' do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+
+      i1 = create(:item)
+      i2 = create(:item)
+      i3 = create(:item)
+
+      create(:invoice_item, invoice: invoice_1, item: i1)
+      create(:invoice_item, invoice: invoice_1, item: i2)
+      create(:invoice_item, invoice: invoice_2, item: i3)
+
+      get "/api/v1/invoices/#{invoice_1.id}/items"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(i1.id.to_s).or eq(i2.id.to_s)
+      expect(result["data"][1]["id"]).to eq(i1.id.to_s).or eq(i2.id.to_s)
     end
 
-    xit 'returns the associated merchant' do
-      get "/api/v1/invoices/:id/merchant"
+    it 'returns the associated customer' do
+      c1 = create(:customer)
+      c2 = create(:customer)
+
+      create(:invoice, customer: c2)
+      invoice_1 = create(:invoice, customer: c1)
+
+      get "/api/v1/invoices/#{invoice_1.id}/customer"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(c1.id.to_s)
+    end
+
+    it 'returns the associated merchant' do
+      m1 = create(:merchant)
+      m2 = create(:merchant)
+
+      create(:invoice, merchant: m2)
+      invoice_1 = create(:invoice, merchant: m1)
+
+      get "/api/v1/invoices/#{invoice_1.id}/merchant"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(m1.id.to_s)
     end
   end
 end
