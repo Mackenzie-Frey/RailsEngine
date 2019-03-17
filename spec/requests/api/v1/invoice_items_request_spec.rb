@@ -54,155 +54,185 @@ describe 'Invoice Item API' do
       expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s)
     end
 
-    xit 'by credit_card_number' do
-      create(:transaction)
-      transaction_2 = create(:transaction)
+    it 'by invoice_id' do
+      create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
 
-      get "/api/v1/transactions/find?credit_card_number=#{transaction_2.credit_card_number}"
+      get "/api/v1/invoice_items/find?invoice_id=#{invoice_item_2.invoice_id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["attributes"]["credit_card_number"]).to eq(transaction_2.credit_card_number)
+      expect(result["data"]["attributes"]["invoice_id"]).to eq(invoice_item_2.invoice_id)
     end
 
-    xit 'by result' do
-      create(:transaction)
-      transaction_1 = create(:transaction, result: 'success')
+    it 'by quantity' do
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, quantity: 'success')
 
-      get "/api/v1/transactions/find?result=#{transaction_1.result}"
+      get "/api/v1/invoice_items/find?quantity=#{invoice_item_1.quantity}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(transaction_1.id.to_s)
+      expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s)
     end
 
-    xit 'by created_at' do
-      create(:transaction)
-      transaction_1 = create(:transaction, created_at: "2012-03-27 14:53:59 UTC")
+    it 'by unit_price' do
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, unit_price: 'success')
 
-      get "/api/v1/transactions/find?created_at=#{transaction_1.created_at}"
+      get "/api/v1/invoice_items/find?unit_price=#{invoice_item_1.unit_price}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(transaction_1.id.to_s)
+      expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s)
     end
 
-    xit 'by updated_at' do
-      create(:transaction)
-      transaction_1 = create(:transaction, updated_at: "2012-03-27 14:53:59 UTC")
+    it 'by created_at' do
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, created_at: "2012-03-27 14:53:59 UTC")
 
-      get "/api/v1/transactions/find?updated_at=#{transaction_1.updated_at}"
+      get "/api/v1/invoice_items/find?created_at=#{invoice_item_1.created_at}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"]["id"]).to eq(transaction_1.id.to_s)
+      expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s)
+    end
+
+    it 'by updated_at' do
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, updated_at: "2012-03-27 14:53:59 UTC")
+
+      get "/api/v1/invoice_items/find?updated_at=#{invoice_item_1.updated_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s)
     end
   end
 
   context 'Multi-Finders' do
-    xit 'by ID' do
-      create(:transaction)
-      transaction_1 = create(:transaction)
+    it 'by ID' do
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item)
 
-      get "/api/v1/transactions/find_all?id=#{transaction_1.id}"
+      get "/api/v1/invoice_items/find_all?id=#{invoice_item_1.id}"
 
       result = JSON.parse(response.body)
 
-      expect(result["data"][0]["id"]).to eq(transaction_1.id.to_s)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
     end
 
-    xit 'by invoice_id' do
+    it 'by item_id' do
+      item = create(:item)
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, item: item)
+      invoice_item_2 = create(:invoice_item, item: item)
+
+      get "/api/v1/invoice_items/find_all?item_id=#{item.id}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(invoice_item_2.id.to_s)
+    end
+
+    it 'by invoice_id' do
       invoice = create(:invoice)
-      create(:transaction)
-      transaction_1 = create(:transaction, invoice: invoice)
-      transaction_2 = create(:transaction, invoice: invoice)
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, invoice: invoice)
+      invoice_item_2 = create(:invoice_item, invoice: invoice)
 
-      get "/api/v1/transactions/find_all?invoice_id=#{invoice.id}"
-
-      result = JSON.parse(response.body)
-
-      expect(result["data"][0]["id"]).to eq(transaction_1.id.to_s)
-      expect(result["data"][1]["id"]).to eq(transaction_2.id.to_s)
-    end
-
-    xit 'by credit_card_number' do
-      credit_card_number = "234982349823"
-      create(:transaction, credit_card_number: credit_card_number)
-      create(:transaction, credit_card_number: credit_card_number)
-      create(:transaction)
-
-      get "/api/v1/transactions/find_all?credit_card_number=#{credit_card_number}"
+      get "/api/v1/invoice_items/find_all?invoice_id=#{invoice.id}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-
-      expect(result["data"][0]["attributes"]["credit_card_number"]).to eq(credit_card_number)
-      expect(result["data"][1]["attributes"]["credit_card_number"]).to eq(credit_card_number)
+      expect(result["data"][0]["attributes"]["invoice_id"]).to eq(invoice_item_1.invoice_id)
+      expect(result["data"][0]["attributes"]["invoice_id"]).to eq(invoice_item_2.invoice_id)
     end
 
-    xit 'by result' do
-      result1 = 'success'
-      create(:transaction, result: result1)
-      create(:transaction, result: result1)
-      create(:transaction, result: 'failed')
+    it 'by quantity' do
+      quantity = 10
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, quantity: quantity)
+      invoice_item_2 = create(:invoice_item, quantity: quantity)
 
-      get "/api/v1/transactions/find_all?result=#{result1}"
+      get "/api/v1/invoice_items/find_all?quantity=#{quantity}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-
-      expect(result["data"][0]["attributes"]["result"]).to eq(result1)
-      expect(result["data"][1]["attributes"]["result"]).to eq(result1)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(invoice_item_2.id.to_s)
     end
 
-    xit 'by created_at' do
-      created_at = "2012-03-27 14:53:59 UTC"
-      t1 = create(:transaction, created_at: created_at)
-      t2 = create(:transaction, created_at: created_at)
-      create(:transaction)
+    it 'by unit_price' do
+      unit_price = 100
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, unit_price: unit_price)
+      invoice_item_2 = create(:invoice_item, unit_price: unit_price)
 
-      get "/api/v1/transactions/find_all?created_at=#{created_at}"
+      get "/api/v1/invoice_items/find_all?unit_price=#{unit_price}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
-
-      expect(result["data"][0]["attributes"]["created_at"]).to eq(t1.created_at)
-      expect(result["data"][1]["attributes"]["created_at"]).to eq(t2.created_at)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(invoice_item_2.id.to_s)
     end
 
-    xit 'by updated_at' do
-      updated_at = "2012-03-27 14:53:59 UTC"
-      t1 = create(:transaction, updated_at: updated_at)
-      t2 = create(:transaction, updated_at: updated_at)
-      create(:transaction)
+    it 'by created_at' do
+      created_at = "2012-03-27"
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, created_at: created_at)
+      invoice_item_2 = create(:invoice_item, created_at: created_at)
 
-      get "/api/v1/transactions/find_all?updated_at=#{updated_at}"
+      get "/api/v1/invoice_items/find_all?created_at=#{created_at}"
 
       result = JSON.parse(response.body)
 
       expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(invoice_item_2.id.to_s)
+    end
 
-      expect(result["data"][0]["attributes"]["updated_at"]).to eq(t1.updated_at)
-      expect(result["data"][1]["attributes"]["updated_at"]).to eq(t2.updated_at)
+    it 'by updated_at' do
+      updated_at = "2012-03-27"
+      create(:invoice_item)
+      invoice_item_1 = create(:invoice_item, updated_at: updated_at)
+      invoice_item_2 = create(:invoice_item, updated_at: updated_at)
+
+      get "/api/v1/invoice_items/find_all?updated_at=#{updated_at}"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(invoice_item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(invoice_item_2.id.to_s)
     end
   end
 
   context 'Random' do
-    xit 'resource' do
-      transaction_1 = create(:transaction)
-      transaction_2 = create(:transaction)
+    it 'resource' do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
 
-      get '/api/v1/transactions/random.json'
+      get '/api/v1/invoice_items/random.json'
 
       result = JSON.parse(response.body)
-      expect(result["data"]["id"]).to eq(transaction_1.id.to_s).or eq(transaction_2.id.to_s)
+      expect(result["data"]["id"]).to eq(invoice_item_1.id.to_s).or eq(invoice_item_2.id.to_s)
     end
   end
 
   context 'Relationships' do
+    it 'returns the associated invoice' do
+      get '/api/v1/invoice_items/:id/invoice'
 
+    end
+
+    it 'returns the associated item' do
+      get '/api/v1/invoice_items/:id/item'
+    end
   end
 end
