@@ -210,10 +210,25 @@ describe 'Item API' do
   end
 
   context 'Relationships' do
-
+    xit 'returns a collection of associated invoice items' do
+      get '/api/v1/items/:id/invoice_items'
+    end
+    xit 'returns the associated merchant' do
+      get '/api/v1/items/:id/merchant'
+    end
   end
 
   context 'Business Intelligence' do
+    xit 'returns the top x items ranked by total revenue generated' do
+      get '/api/v1/items/most_revenue?quantity=x'
+    end
 
+    xit 'returns the top x item instances ranked by total number sold' do
+      get ''
+    end
+
+    xit 'returns the date with the most sales for the given item using the invoice date. If there are multiple days with equal number of sales, return the most recent day' do
+      get '/api/v1/items/:id/best_day'
+    end
   end
 end
