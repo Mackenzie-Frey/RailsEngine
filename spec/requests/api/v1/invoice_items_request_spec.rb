@@ -248,6 +248,8 @@ describe 'Invoice Item API' do
       ii = create(:invoice_item, item: i1)
 
       get "/api/v1/invoice_items/#{ii.id}/item"
+      
+      result = JSON.parse(response.body)
 
       expect(result["data"]["id"]).to eq(i1.id.to_s)
     end
