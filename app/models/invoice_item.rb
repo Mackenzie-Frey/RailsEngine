@@ -17,4 +17,12 @@ class InvoiceItem < ApplicationRecord
   def self.random
     all.shuffle.pop
   end
+
+  def self.find_invoice(invoice_item_id)
+    Invoice.joins(:invoice_items).where("invoice_items.id=#{invoice_item_id}").first
+  end
+
+  def self.find_item(invoice_item_id)
+    Item.joins(:invoice_items).where("invoice_items.id=#{invoice_item_id}").first
+  end
 end
