@@ -13,10 +13,24 @@ class Item < ApplicationRecord
   end
 
   def self.associated_invoice_items(item_id)
-    InvoiceItem.joins(:item).where("items.id=#{item_id}")
+    InvoiceItem
+    .joins(:item)
+    .where("items.id=#{item_id}")
   end
 
   def self.associated_merchant(item_id)
-    Merchant.joins(:items, :invoices).where("items.id=#{item_id}").first
+    Merchant
+    .joins(:items, :invoices)
+    .where("items.id=#{item_id}")
+    .first
+  end
+
+  def self.most_revenue(limit)
+    joins(invoice_items: [invoice: :transactions])
+    .select("items.*, SUM(quantity*invoice_items.unit_price) AS total_revenue")
+    .merge(Transaction.successful)
+    .order("total_revenue DESC")
+    .group(:id)
+    .limit(limit)
   end
 end
