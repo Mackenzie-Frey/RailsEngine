@@ -28,9 +28,11 @@ Rails.application.routes.draw do
         get 'favorite_merchant' => 'customers/favorite_merchant#show'
       end
 
-      # namespace :items do
-      #   get 'find' => 'search#show'
-      # end
+      namespace :items do
+        get 'find' => 'search#show'
+        get 'find_all' => 'search#index'
+        get 'random' => 'random#show'
+      end
       resources :items, only: [:index, :show] do
       end
     end
