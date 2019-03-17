@@ -9,6 +9,6 @@ class Api::V1::InvoiceItems::SearchController < ApplicationController
 
   private
   def look_up_params
-    params.permit(:id)
+    params.permit(:id, :item_id, :invoice_id, :quantity, :unit_price, :created_at, :updated_at)
   end
 end
