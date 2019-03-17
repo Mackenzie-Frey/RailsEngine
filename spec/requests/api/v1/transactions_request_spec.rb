@@ -204,8 +204,17 @@ describe 'Transaction API' do
   end
 
   context 'Relationships' do
-    xit 'returns the associated invoice' do
-      get '/api/v1/transactions/:id/invoice'
+    it 'returns the associated invoice' do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+
+      create(:transaction, invoice: invoice_1)
+      transaction_2 = create(:transaction, invoice: invoice_2)
+
+      get "/api/v1/transactions/#{transaction_2.id}/invoice"
+
+      result = JSON.parse(response.body)
+      expect(result["data"]["id"]).to eq(invoice_2.id.to_s)
     end
   end
 end
