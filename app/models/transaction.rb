@@ -8,4 +8,8 @@ class Transaction < ApplicationRecord
                         :updated_at
 
   scope :successful, -> { where(result: "success") }
+
+    def self.random
+      all.shuffle.pop
+    end
 end
