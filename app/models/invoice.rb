@@ -10,6 +10,10 @@ class Invoice < ApplicationRecord
                         :created_at,
                         :updated_at
 
+  def self.random
+    all.shuffle.pop
+  end
+
 # Fully funcional method, not a part of project spec.
   # def self.most_expensive(limit = 5)
   #   Invoice.select("invoices.*, sum(quantity*unit_price) AS revenue")
