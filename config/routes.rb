@@ -57,7 +57,7 @@ Rails.application.routes.draw do
         get 'random' => 'random#show'
       end
       resources :transactions, only: [:index, :show] do
-
+        get 'invoice' => 'transactions/associated_invoice#show'
       end
 
       namespace :invoice_items do
