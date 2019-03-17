@@ -239,8 +239,28 @@ describe 'Item API' do
   end
 
   context 'Business Intelligence' do
-    xit 'returns the top x items ranked by total revenue generated' do
-      get "/api/v1/items/most_revenue?quantity=x"
+    it 'returns the top x items ranked by total revenue generated' do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
+
+      invoice_1 = create(:invoice)
+
+      create(:invoice_item, item: item_1, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_1, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_2, invoice: invoice_1, unit_price: 100, quantity: 2)
+      create(:invoice_item, item: item_3, invoice: invoice_1, unit_price: 1, quantity: 2)
+
+      create(:transaction, result: "failed", invoice: invoice_1)
+      create(:transaction, result: "success", invoice: invoice_1)
+
+      get "/api/v1/items/most_revenue?quantity=2"
+
+      result = JSON.parse(response.body)
+
+      expect(result["data"].count).to eq(2)
+      expect(result["data"][0]["id"]).to eq(item_1.id.to_s)
+      expect(result["data"][1]["id"]).to eq(item_2.id.to_s)
     end
 
     xit 'returns the top x item instances ranked by total number sold' do
