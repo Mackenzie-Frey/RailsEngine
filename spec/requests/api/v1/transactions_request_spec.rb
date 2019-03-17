@@ -159,7 +159,7 @@ describe 'Transaction API' do
     end
 
     xit 'by created_at' do
-      created_at = "2012-03-27 14:53:59 UTC"
+      created_at = "2012-03-27"
       t1 = create(:transaction, created_at: created_at)
       t2 = create(:transaction, created_at: created_at)
       create(:transaction)
@@ -175,7 +175,7 @@ describe 'Transaction API' do
     end
 
     xit 'by updated_at' do
-      updated_at = "2012-03-27 14:53:59 UTC"
+      updated_at = "2012-03-27"
       t1 = create(:transaction, updated_at: updated_at)
       t2 = create(:transaction, updated_at: updated_at)
       create(:transaction)
