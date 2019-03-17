@@ -11,4 +11,12 @@ class Item < ApplicationRecord
   def self.random
     all.shuffle.pop
   end
+
+  def self.associated_invoice_items(item_id)
+    InvoiceItem.joins(:item).where("items.id=#{item_id}")
+  end
+
+  def self.associated_merchant(item_id)
+    Merchant.joins(:items, :invoices).where("items.id=#{item_id}").first
+  end
 end
