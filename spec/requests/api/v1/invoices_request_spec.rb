@@ -200,22 +200,22 @@ describe 'Invoice API' do
   end
 
   context 'Relationships' do
-    it 'returns a collection of associated transactions' do
+    xit 'returns a collection of associated transactions' do
       get "/api/v1/invoices/:id/transactions"
     end
-    it 'returns a collection of associated invoice items' do
+    xit 'returns a collection of associated invoice items' do
       get "/api/v1/invoices/:id/invoice_items"
     end
 
-    it 'returns a collection of associated items' do
+    xit 'returns a collection of associated items' do
       get "/api/v1/invoices/:id/items"
     end
 
-    it 'returns the associated customer' do
+    xit 'returns the associated customer' do
       get "/api/v1/invoices/:id/customer"
     end
 
-    it 'returns the associated merchant' do
+    xit 'returns the associated merchant' do
       get "/api/v1/invoices/:id/merchant"
     end
   end
