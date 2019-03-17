@@ -33,4 +33,13 @@ class Item < ApplicationRecord
     .group(:id)
     .limit(limit)
   end
+
+  def self.most_items_sold(limit)
+    joins(invoice_items: [invoice: :transactions])
+    .select("items.*, COUNT(quantity) AS total_sold")
+    .merge(Transaction.successful)
+    .order("total_sold DESC")
+    .group(:id)
+    .limit(limit)
+  end
 end
