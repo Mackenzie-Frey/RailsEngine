@@ -60,7 +60,8 @@ Rails.application.routes.draw do
         get 'random' => 'random#show'
       end
       resources :invoice_items, only: [:index, :show] do
-
+        get 'invoice' => 'invoice_items/associated_invoice#show'
+        get 'item' => 'invoice_items/associated_item#show'
       end
     end
   end
