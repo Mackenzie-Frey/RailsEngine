@@ -53,6 +53,16 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index, :show] do
 
       end
+
+      namespace :invoice_items do
+        get 'find' => 'search#show'
+        get 'find_all' => 'search#index'
+        get 'random' => 'random#show'
+      end
+      resources :invoice_items, only: [:index, :show] do
+        get 'invoice' => 'invoice_items/associated_invoice#show'
+        get 'item' => 'invoice_items/associated_item#show'
+      end
     end
   end
 end

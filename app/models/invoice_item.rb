@@ -13,4 +13,16 @@ class InvoiceItem < ApplicationRecord
     .merge(Transaction.successful)
     .where(invoices: {updated_at: Date.parse(date).all_day})[0]
   end
+
+  def self.random
+    all.shuffle.pop
+  end
+
+  def self.find_invoice(invoice_item_id)
+    Invoice.joins(:invoice_items).where("invoice_items.id=#{invoice_item_id}").first
+  end
+
+  def self.find_item(invoice_item_id)
+    Item.joins(:invoice_items).where("invoice_items.id=#{invoice_item_id}").first
+  end
 end
