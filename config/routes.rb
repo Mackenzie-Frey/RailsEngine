@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         get 'find' => 'search#show'
         get 'find_all' => 'search#index'
         get 'random' => 'random#show'
+        get 'most_revenue' => 'most_revenue#index'
       end
       resources :items, only: [:index, :show] do
         get 'invoice_items' => 'items/associated_invoice_items#index'
