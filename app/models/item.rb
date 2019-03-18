@@ -11,4 +11,35 @@ class Item < ApplicationRecord
   def self.random
     all.shuffle.pop
   end
+
+  def self.associated_invoice_items(item_id)
+    InvoiceItem
+    .joins(:item)
+    .where("items.id=#{item_id}")
+  end
+
+  def self.associated_merchant(item_id)
+    Merchant
+    .joins(:items, :invoices)
+    .where("items.id=#{item_id}")
+    .first
+  end
+
+  def self.most_revenue(limit)
+    joins(invoice_items: [invoice: :transactions])
+    .select("items.*, SUM(quantity*invoice_items.unit_price) AS total_revenue")
+    .merge(Transaction.successful)
+    .order("total_revenue DESC")
+    .group(:id)
+    .limit(limit)
+  end
+
+  def self.most_items_sold(limit)
+    joins(invoice_items: [invoice: :transactions])
+    .select("items.*, COUNT(quantity) AS total_sold")
+    .merge(Transaction.successful)
+    .order("total_sold DESC")
+    .group(:id)
+    .limit(limit)
+  end
 end

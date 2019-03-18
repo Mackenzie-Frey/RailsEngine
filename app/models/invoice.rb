@@ -14,6 +14,18 @@ class Invoice < ApplicationRecord
     all.shuffle.pop
   end
 
+  def self.associated_transactions(invoice_id)
+    Transaction.joins(:invoice).where("invoices.id=#{invoice_id}")
+  end
+
+  def self.associated_invoice_items(invoice_id)
+    InvoiceItem.joins(:invoice).where("invoices.id=#{invoice_id}")
+  end
+
+  def self.associated_items(invoice_id)
+    Item.joins(invoice_items: :invoice).where("invoices.id=#{invoice_id}")
+  end
+
 # Fully funcional method, not a part of project spec.
   # def self.most_expensive(limit = 5)
   #   Invoice.select("invoices.*, sum(quantity*unit_price) AS revenue")
