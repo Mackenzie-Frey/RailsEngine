@@ -2,7 +2,7 @@
 
 ## Description
 
-Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to deliver Fast JSON-formatted data. A rake task was utilized to import CSV files and to create the corresponding records in the Postgresql database.
+Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the languages of Ruby, ActiveRecord, SQL, and the web framework of Rails to deliver Fast JSON-formatted data. A rake task was utilized to import CSV files and to create the corresponding records in the PostgreSQL database.
 
 ## Schema
 ![Alt text](./public/schema_diagram.png?raw=true "Database Schema")
@@ -20,6 +20,7 @@ $ git clone git@github.com:Mackenzie-Frey/RailsEngine.git
 $ cd RailsEngine
 $ bundle
 $ rails g rspec:install
+$ rake db:{drop,create,migrate}
 ```
 To seed the database with the CSV files, run the following:
 ```bundle exec rake import_all```
@@ -104,8 +105,6 @@ GET /api/v1/customers/:id/favorite_merchant
 * Waffle.io
 * GitHub
 
-## Rubric/Project Description
-#### [**_View the Project Description and Rubric_**]http://backend.turing.io/module3/projects/rails_engine
+#### [Project Description/Rubric](http://backend.turing.io/module3/projects/rails_engine)
 
-## Author
-[Mackenzie Frey](https://github.com/Mackenzie-Frey)
+#### [Blog Post](https://medium.com/@mackenziefrey/a-process-for-composing-activerecord-queries-b61620c8bec3)
