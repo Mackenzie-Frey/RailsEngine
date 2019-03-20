@@ -2,7 +2,7 @@
 
 ## Description
 
-Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to deliver Fast JSON-formatted data. A rake task was utilized to import CSV files and to create the corresponding records in the Postgresql database.
+Rails Engine is a 7-day solo project, during module three, of Turing School's Backend Engineering Program. The application utilizes the language of Ruby, ActiveRecord, and the web framework of Rails to deliver Fast JSON-formatted data. A rake task was utilized to import CSV files and to create the corresponding records in the PostgreSQL database.
 
 ## Schema
 ![Alt text](./public/schema_diagram.png?raw=true "Database Schema")
