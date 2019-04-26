@@ -53,12 +53,9 @@ GET /api/v1/merchants.json
 GET /api/v1/merchants/random.json
 GET /api/v1/merchants/:id/items
 GET /api/v1/merchants/:id/invoices
-GET /api/v1/merchants/:id/revenue
-GET /api/v1/merchants/:id/revenue?date=x
 GET /api/v1/merchants/:id/favorite_customer
 GET /api/v1/merchants/most_revenue?quantity=x
 GET /api/v1/merchants/most_items?quantity=x
-GET /api/v1/merchants/revenue?date=x
 GET /api/v1/merchants/find?id=x
 GET /api/v1/merchants/find?name=x
 GET /api/v1/merchants/find?created_at=x
@@ -67,27 +64,20 @@ GET /api/v1/merchants/find_all?id=x
 GET /api/v1/merchants/find_all?name=x
 GET /api/v1/merchants/find_all?created_at=x
 GET /api/v1/merchants/find_all?updated_at=x
-
 GET /api/v1/invoices/:id/transactions
 GET /api/v1/invoices/:id/invoice_items
 GET /api/v1/invoices/:id/items
 GET /api/v1/invoices/:id/customer
 GET /api/v1/invoices/:id/merchant
-
 GET /api/v1/items/:id/invoice_items
 GET /api/v1/items/:id/merchant
-GET /api/v1/items/:id/best_day
 GET /api/v1/items/most_revenue?quantity=x
 GET /api/v1/items/most_items?quantity=x
-
 GET /api/v1/invoice_items/:id/invoice
 GET /api/v1/invoice_items/:id/item
-
 GET /api/v1/transactions/:id/invoice
-
 GET /api/v1/customers/:id/invoices
 GET /api/v1/customers/:id/transactions
-GET /api/v1/customers/:id/favorite_merchant
 ```
 
 ## Built Utilizing
@@ -104,8 +94,7 @@ GET /api/v1/customers/:id/favorite_merchant
 * Waffle.io
 * GitHub
 
-## Rubric/Project Description
-#### [**_View the Project Description and Rubric_**]http://backend.turing.io/module3/projects/rails_engine
+## [**_Project Specifications_**](http://backend.turing.io/module3/projects/rails_engine)
 
-## Author
+### Author
 [Mackenzie Frey](https://github.com/Mackenzie-Frey)
